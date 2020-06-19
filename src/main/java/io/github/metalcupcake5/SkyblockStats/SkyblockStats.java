@@ -19,6 +19,8 @@ public class SkyblockStats {
 
     @Getter private static SkyblockStats instance;
     private Util util = new Util(this);
+    private ItemUtil itemUtil = new ItemUtil(this);
+    private StatsUtil statsUtil = new StatsUtil(this);
     
     @EventHandler
     public void init(FMLInitializationEvent event)

@@ -100,11 +100,6 @@ public class GetProfile extends CommandBase {
 
                     JsonObject data = new Gson().fromJson(urlResponse.toString(), JsonObject.class);
 
-                    if(urlConnectionResponseCode == HttpURLConnection.HTTP_SERVER_ERROR){
-                        main.getUtil().sendError("Error: " + data.get("error").getAsString());
-                        return;
-                    }
-
                     JsonObject profiles = data.get("profiles").getAsJsonObject();
                     Set<Map.Entry<String, JsonElement>> profileSet = profiles.entrySet();
                     ArrayList<String> profileIds = new ArrayList<>();
@@ -156,25 +151,27 @@ public class GetProfile extends CommandBase {
                     String display_name = profile.get("data").getAsJsonObject().get("display_name").getAsString();
 
                     //Profile Data
-                    Integer farming = main.getUtil().getLevel(profile, "farming");
-                    String armor = main.getUtil().getArmorSet(profile);
-                    String armorRarity = main.getUtil().getArmorSetRarity(profile);
+                    Integer farming = main.getStatsUtil().getLevel(profile, "farming");
+                    String armor = main.getItemUtil().getArmorSet(profile);
+                    String armorRarity = main.getItemUtil().getArmorSetRarity(profile);
                     String fairy_souls = main.getUtil().getFairySouls(profile);
-                    Integer health = main.getUtil().getStat(profile, "health");
-                    Integer defense = main.getUtil().getStat(profile, "defense");
-                    Integer intel = main.getUtil().getStat(profile, "intelligence");
-                    Integer cc = main.getUtil().getStat(profile, "crit_chance");
-                    Integer cd = main.getUtil().getStat(profile, "crit_damage");
-                    String sword = main.getUtil().getHighestSword(profile);
+                    Integer health = main.getStatsUtil().getStat(profile, "health");
+                    Integer defense = main.getStatsUtil().getStat(profile, "defense");
+                    Integer intel = main.getStatsUtil().getStat(profile, "intelligence");
+                    Integer cc = main.getStatsUtil().getStat(profile, "crit_chance");
+                    Integer cd = main.getStatsUtil().getStat(profile, "crit_damage");
+                    String sword = main.getItemUtil().getHighestSword(profile);
+
+                    String stats = ChatFormatting.RED + Symbols.HEALTH.getSymbol() + ": " + health + " " + ChatFormatting.GREEN + Symbols.DEFENSE.getSymbol() + ": " + defense + " " +
+                            ChatFormatting.AQUA + Symbols.INTELLIGENCE.getSymbol() + ": " + intel + "\n" +
+                            ChatFormatting.BLUE + Symbols.CRIT_CHANCE.getSymbol() + ": " + cc + " " +ChatFormatting.BLUE + Symbols.CRIT_DAMAGE.getSymbol() + ": " + cd + "\n";
 
                     //String formatting
                     String armor_message = armor == null ? ChatFormatting.GRAY + "No full set worn." : main.getUtil().parseRarity(armor, armorRarity);
 
                     String message = ChatFormatting.GRAY+"Stats for " + ChatFormatting.LIGHT_PURPLE+ display_name +
                             ChatFormatting.GRAY + " on profile " + ChatFormatting.LIGHT_PURPLE + main.getUtil().toProperCase(profileName) + ChatFormatting.GRAY + ".\n" +
-                            ChatFormatting.RED + Symbols.HEALTH.getSymbol() + ": " + health + " " + ChatFormatting.GREEN + Symbols.DEFENSE.getSymbol() + ": " + defense + " " +
-                            ChatFormatting.AQUA + Symbols.INTELLIGENCE.getSymbol() + ": " + intel + "\n" +
-                            ChatFormatting.BLUE + Symbols.CRIT_CHANCE.getSymbol() + ": " + cc + " " +ChatFormatting.BLUE + Symbols.CRIT_DAMAGE.getSymbol() + ": " + cd + "\n" +
+                            stats +
                             ChatFormatting.LIGHT_PURPLE + "Fairy Souls" + ChatFormatting.WHITE + ": " + ChatFormatting.DARK_PURPLE + fairy_souls + "\n" +
                             ChatFormatting.GRAY + "Armor Set" + ChatFormatting.WHITE + ": " + armor_message + "\n" +
                             ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword + "\n" +
@@ -183,9 +180,6 @@ public class GetProfile extends CommandBase {
                     main.getUtil().sendMessage(message);
                     return;
                 } catch (IOException e) {
-                    System.out.println("////////\nERROR\n////////");
-                    FMLLog.severe(e.toString());
-                    System.out.println(e.toString());
                     main.getUtil().sendError("An error occurred! Check the logs for the error!");
                     return;
                 }

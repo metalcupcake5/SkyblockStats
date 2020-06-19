@@ -31,58 +31,12 @@ public class Util {
         sendMessage(ChatFormatting.RED + text, false);
     }
 
-    public static Integer getLevel(JsonObject profileObj, String skillName){
-        JsonObject profileData = profileObj.get("data").getAsJsonObject();
-        JsonObject skills = profileData.get("levels").getAsJsonObject();
-        if(!skills.has(skillName)){
-            return null;
-        }
-        JsonObject skill = skills.get(skillName).getAsJsonObject();
-        return skill.get("level").getAsInt();
-    }
-
-    public static String getArmorSet(JsonObject profileObj){
-        JsonObject items = profileObj.get("items").getAsJsonObject();
-        if(!items.has("armor_set")){
-            return null;
-        }
-        return items.get("armor_set").getAsString();
-    }
-
-    public static String getArmorSetRarity(JsonObject profileObj){
-        JsonObject items = profileObj.get("items").getAsJsonObject();
-        if(!items.has("armor_set_rarity")){
-            return null;
-        }
-        return items.get("armor_set_rarity").getAsString();
-    }
-
-    public static String getHighestSword(JsonObject profileObj){
-        JsonObject items = profileObj.get("items").getAsJsonObject();
-        if(!items.has("highest_rarity_sword")){
-            return null;
-        }
-        JsonObject sword = items.get("highest_rarity_sword").getAsJsonObject();
-        String name = sword.get("display_name").getAsString();
-        String rarity = sword.get("rarity").getAsString();
-        return Util.parseRarity(name, rarity);
-    }
-
     public static String getFairySouls(JsonObject profileObj){
         JsonObject profileData = profileObj.get("data").getAsJsonObject();
         JsonObject souls = profileData.get("fairy_souls").getAsJsonObject();
         Integer collected = souls.get("collected").getAsInt();
         Integer total = souls.get("total").getAsInt();
         return collected + "/" + total;
-    }
-
-    public static Integer getStat(JsonObject profileObj, String stat){
-        JsonObject profileData = profileObj.get("data").getAsJsonObject();
-        JsonObject stats = profileData.get("stats").getAsJsonObject();
-        if(!stats.has(stat)){
-            return null;
-        }
-        return stats.get(stat).getAsInt();
     }
 
     public static String parseRarity(String text, String rarity){
