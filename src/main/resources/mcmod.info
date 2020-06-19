@@ -1,0 +1,16 @@
+[
+    {
+      "modid": "skyblockstats",
+      "name": "SkyblockStats",
+      "description": "A mod to fetch Hypixel Skyblock player stats from sky.lea.moe",
+      "version": "${version}",
+      "mcversion": "${mcversion}",
+      "url": "",
+      "updateUrl": "",
+      "authorList": ["metalcupcake5"],
+      "credits": "LeaPhant",
+      "logoFile": "",
+      "screenshots": [],
+      "dependencies": []
+    }
+]
