@@ -27,8 +27,16 @@ public class Util {
         sendMessage(text, true);
     }
 
+    public void sendDataMessage(String text){
+        String content =
+                ChatFormatting.STRIKETHROUGH + "------------------------------" + "\n" +
+                text + "\n" +
+                ChatFormatting.STRIKETHROUGH + "------------------------------";
+        sendMessage(content, false);
+    }
+
     public void sendError(String text){
-        sendMessage(ChatFormatting.RED + text, false);
+        sendMessage(ChatFormatting.RED + text);
     }
 
     public static String getFairySouls(JsonObject profileObj){

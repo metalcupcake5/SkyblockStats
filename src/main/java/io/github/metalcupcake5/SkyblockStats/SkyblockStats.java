@@ -1,6 +1,7 @@
 package io.github.metalcupcake5.SkyblockStats;
 
 import io.github.metalcupcake5.SkyblockStats.commands.GetProfile;
+import io.github.metalcupcake5.SkyblockStats.commands.GetSkills;
 import io.github.metalcupcake5.SkyblockStats.utils.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -26,5 +27,6 @@ public class SkyblockStats {
     public void init(FMLInitializationEvent event)
     {
 		ClientCommandHandler.instance.registerCommand(new GetProfile(this));
+		ClientCommandHandler.instance.registerCommand(new GetSkills(this));
     }
 }

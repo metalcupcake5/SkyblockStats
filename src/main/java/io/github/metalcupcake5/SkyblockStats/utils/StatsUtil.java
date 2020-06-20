@@ -11,14 +11,18 @@ public class StatsUtil {
         this.main = main;
     }
 
-    public static Integer getLevel(JsonObject profileObj, String skillName){
+    public static String getLevel(JsonObject profileObj, String skillName){
         JsonObject profileData = profileObj.get("data").getAsJsonObject();
         JsonObject skills = profileData.get("levels").getAsJsonObject();
         if(!skills.has(skillName)){
             return null;
         }
         JsonObject skill = skills.get(skillName).getAsJsonObject();
-        return skill.get("level").getAsInt();
+        Integer level = skill.get("level").getAsInt();
+        if(skill.get("maxLevel").getAsInt() == level){
+            return ChatFormatting.GOLD + level.toString();
+        }
+        return ChatFormatting.WHITE + level.toString();
     }
 
     public static Integer getStat(JsonObject profileObj, String stat){
@@ -28,5 +32,12 @@ public class StatsUtil {
             return null;
         }
         return stats.get(stat).getAsInt();
+    }
+
+    public static String shadeIfMax(Integer level){
+        if(level == 50){
+            return ChatFormatting.GOLD + level.toString();
+        }
+        return ChatFormatting.WHITE + level.toString();
     }
 }

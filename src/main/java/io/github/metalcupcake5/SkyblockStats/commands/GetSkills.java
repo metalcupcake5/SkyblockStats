@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.metalcupcake5.SkyblockStats.SkyblockStats;
 import io.github.metalcupcake5.SkyblockStats.utils.ChatFormatting;
-import io.github.metalcupcake5.SkyblockStats.utils.Symbols;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.fml.common.FMLLog;
@@ -17,35 +16,34 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
-public class GetProfile extends CommandBase {
-    
+public class GetSkills extends CommandBase {
     private SkyblockStats main;
 
-    public GetProfile(SkyblockStats main){
+    public GetSkills(SkyblockStats main){
         this.main = main;
     }
 
     @Override
     public String getCommandName(){
-        return "getProfile";
+        return "getSkills";
     }
 
     @Override
     public List<String> getCommandAliases(){
-        return Arrays.asList("profile", "getprofile");
+        return Arrays.asList("getskills");
     }
 
     @Override
     public String getCommandUsage(ICommandSender sender){
         return
                 ChatFormatting.LIGHT_PURPLE + "--------|" +
-                ChatFormatting.GRAY + "/getProfile" +
-                ChatFormatting.LIGHT_PURPLE + "|--------\n" +
-                ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getProfile <username> <profile>\n" +
-                ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/profile, /getprofile\n" +
-                ChatFormatting.LIGHT_PURPLE + "--------|" +
-                ChatFormatting.GRAY + "/getProfile" +
-                ChatFormatting.LIGHT_PURPLE + "|--------";
+                        ChatFormatting.GRAY + "/getSkills" +
+                        ChatFormatting.LIGHT_PURPLE + "|--------\n" +
+                        ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getSkills <username> <profile>\n" +
+                        ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/getskills\n" +
+                        ChatFormatting.LIGHT_PURPLE + "--------|" +
+                        ChatFormatting.GRAY + "/getSkills" +
+                        ChatFormatting.LIGHT_PURPLE + "|--------";
     }
 
     @Override
@@ -53,7 +51,7 @@ public class GetProfile extends CommandBase {
     {
         return true;
     }
-    
+
     @Override
     public void processCommand(ICommandSender sender, String[] args){
         if(args.length > 1) {
@@ -150,32 +148,27 @@ public class GetProfile extends CommandBase {
 
                     String display_name = profile.get("data").getAsJsonObject().get("display_name").getAsString();
 
-                    //Profile Data
-                    //String farming = main.getStatsUtil().getLevel(profile, "farming");
-                    String armor = main.getItemUtil().getArmorSet(profile);
-                    String armorRarity = main.getItemUtil().getArmorSetRarity(profile);
-                    String fairy_souls = main.getUtil().getFairySouls(profile);
-                    Integer health = main.getStatsUtil().getStat(profile, "health");
-                    Integer defense = main.getStatsUtil().getStat(profile, "defense");
-                    Integer intel = main.getStatsUtil().getStat(profile, "intelligence");
-                    Integer cc = main.getStatsUtil().getStat(profile, "crit_chance");
-                    Integer cd = main.getStatsUtil().getStat(profile, "crit_damage");
-                    String sword = main.getItemUtil().getHighestSword(profile);
+                    //Skills Data
+                    String farming = main.getStatsUtil().getLevel(profile, "farming");
+                    String combat = main.getStatsUtil().getLevel(profile, "combat");
+                    String foraging = main.getStatsUtil().getLevel(profile, "foraging");
+                    String fishing = main.getStatsUtil().getLevel(profile, "fishing");
+                    String taming = main.getStatsUtil().getLevel(profile, "taming");
+                    String enchanting = main.getStatsUtil().getLevel(profile, "enchanting");
+                    String alchemy = main.getStatsUtil().getLevel(profile, "alchemy");
+                    String runecrafting = main.getStatsUtil().getLevel(profile, "runecrafting");
+                    String carpentry = main.getStatsUtil().getLevel(profile, "carpentry");
+                    String mining = main.getStatsUtil().getLevel(profile, "mining");
 
-                    String stats = ChatFormatting.RED + Symbols.HEALTH.getSymbol() + ": " + health + " " + ChatFormatting.GREEN + Symbols.DEFENSE.getSymbol() + ": " + defense + " " +
-                            ChatFormatting.AQUA + Symbols.INTELLIGENCE.getSymbol() + ": " + intel + "\n" +
-                            ChatFormatting.BLUE + Symbols.CRIT_CHANCE.getSymbol() + ": " + cc + " " +ChatFormatting.BLUE + Symbols.CRIT_DAMAGE.getSymbol() + ": " + cd + "\n";
+                    String c = ChatFormatting.GRAY + ",";
 
-                    //String formatting
-                    String armor_message = armor == null ? ChatFormatting.GRAY + "No full set worn." : main.getUtil().parseRarity(armor, armorRarity);
-
-                    String message = ChatFormatting.GRAY+"Stats for " + ChatFormatting.LIGHT_PURPLE+ display_name +
+                    String message = ChatFormatting.GRAY+"Skills for " + ChatFormatting.LIGHT_PURPLE+ display_name +
                             ChatFormatting.GRAY + " on profile " + ChatFormatting.LIGHT_PURPLE + main.getUtil().toProperCase(profileName) + ChatFormatting.GRAY + ".\n" +
-                            stats +
-                            ChatFormatting.LIGHT_PURPLE + "Fairy Souls" + ChatFormatting.WHITE + ": " + ChatFormatting.DARK_PURPLE + fairy_souls + "\n" +
-                            ChatFormatting.GRAY + "Armor Set" + ChatFormatting.WHITE + ": " + armor_message + "\n" +
-                            ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword + "\n";// +
-                            //ChatFormatting.GRAY + "Farming: "+ farming ;
+                            ChatFormatting.DARK_PURPLE + "Taming: " + ChatFormatting.WHITE + taming + ChatFormatting.GREEN + " Farming: " + ChatFormatting.WHITE + farming + "\n" +
+                            ChatFormatting.GRAY + "Mining: " + ChatFormatting.WHITE + mining + ChatFormatting.DARK_RED + " Combat: " + ChatFormatting.WHITE + combat + "\n" +
+                            ChatFormatting.DARK_GREEN + "Foraging: " + ChatFormatting.WHITE + foraging + ChatFormatting.DARK_AQUA + " Fishing: " + ChatFormatting.WHITE + fishing + "\n" +
+                            ChatFormatting.AQUA + "Enchanting: " + ChatFormatting.WHITE + enchanting + ChatFormatting.BLUE + " Alchemy: " + ChatFormatting.WHITE + alchemy + "\n" +
+                            ChatFormatting.YELLOW + "Carpentry: " + ChatFormatting.WHITE + carpentry + ChatFormatting.LIGHT_PURPLE + " Runecrafting: " + ChatFormatting.WHITE + runecrafting;
 
                     main.getUtil().sendDataMessage(message);
                     return;
