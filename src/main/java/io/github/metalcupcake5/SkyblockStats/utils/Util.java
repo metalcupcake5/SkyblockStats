@@ -1,6 +1,7 @@
 package io.github.metalcupcake5.SkyblockStats.utils;
 
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.metalcupcake5.SkyblockStats.SkyblockStats;
 import lombok.Getter;
@@ -9,6 +10,9 @@ import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
+
+import java.util.Map;
+import java.util.Set;
 
 @Getter
 public class Util {
@@ -95,5 +99,18 @@ public class Util {
         }
 
         return converted.toString();
+    }
+
+    public static String getRecentProfile(JsonObject profiles){
+        Set<Map.Entry<String, JsonElement>> profileSet = profiles.entrySet();
+        for (Map.Entry<String,JsonElement> me:profileSet)
+        {
+            String name = me.getValue().getAsJsonObject().get("cute_name").getAsString();
+            Boolean current = me.getValue().getAsJsonObject().get("current").getAsBoolean();
+            if(current){
+                return name;
+            }
+        }
+        return null;
     }
 }
