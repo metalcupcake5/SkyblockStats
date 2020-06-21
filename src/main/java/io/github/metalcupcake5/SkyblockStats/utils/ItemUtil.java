@@ -12,7 +12,7 @@ public class ItemUtil {
     }
 
     public static String getArmorSet(JsonObject profileObj){
-        JsonObject items = profileObj.get("items").getAsJsonObject();
+        JsonObject items = profileObj.getAsJsonObject("items");
         if(!items.has("armor_set")){
             return null;
         }
@@ -20,7 +20,7 @@ public class ItemUtil {
     }
 
     public static String getArmorSetRarity(JsonObject profileObj){
-        JsonObject items = profileObj.get("items").getAsJsonObject();
+        JsonObject items = profileObj.getAsJsonObject("items");
         if(!items.has("armor_set_rarity")){
             return null;
         }
@@ -28,7 +28,7 @@ public class ItemUtil {
     }
 
     public static String getHighestSword(JsonObject profileObj){
-        JsonObject items = profileObj.get("items").getAsJsonObject();
+        JsonObject items = profileObj.getAsJsonObject("items");
         if(!items.has("highest_rarity_sword")){
             return null;
         }

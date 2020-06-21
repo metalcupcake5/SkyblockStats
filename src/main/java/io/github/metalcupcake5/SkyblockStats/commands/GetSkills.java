@@ -166,24 +166,25 @@ public class GetSkills extends CommandBase {
                     String mining = main.getStatsUtil().getLevel(profile, "mining");
 
                     String c = ChatFormatting.GRAY + ",";
+                    String colon = ChatFormatting.GRAY + ": ";
 
                     String message = ChatFormatting.GRAY+"Skills for " + ChatFormatting.LIGHT_PURPLE+ display_name +
                             ChatFormatting.GRAY + " on profile " + ChatFormatting.LIGHT_PURPLE + main.getUtil().toProperCase(profileName) + ChatFormatting.GRAY + ".\n" +
-                            ChatFormatting.DARK_PURPLE + "Taming: " + ChatFormatting.WHITE + taming + ChatFormatting.GREEN + " Farming: " + ChatFormatting.WHITE + farming + "\n" +
-                            ChatFormatting.GRAY + "Mining: " + ChatFormatting.WHITE + mining + ChatFormatting.DARK_RED + " Combat: " + ChatFormatting.WHITE + combat + "\n" +
-                            ChatFormatting.DARK_GREEN + "Foraging: " + ChatFormatting.WHITE + foraging + ChatFormatting.DARK_AQUA + " Fishing: " + ChatFormatting.WHITE + fishing + "\n" +
-                            ChatFormatting.AQUA + "Enchanting: " + ChatFormatting.WHITE + enchanting + ChatFormatting.BLUE + " Alchemy: " + ChatFormatting.WHITE + alchemy + "\n" +
-                            ChatFormatting.YELLOW + "Carpentry: " + ChatFormatting.WHITE + carpentry + ChatFormatting.LIGHT_PURPLE + " Runecrafting: " + ChatFormatting.WHITE + runecrafting;
+                            ChatFormatting.DARK_PURPLE + "Taming" + colon + ChatFormatting.WHITE + taming + c + ChatFormatting.GREEN + " Farming" + colon + ChatFormatting.WHITE + farming + "\n" +
+                            ChatFormatting.GRAY + "Mining" + colon + ChatFormatting.WHITE + mining + ChatFormatting.DARK_RED + " Combat" + colon + ChatFormatting.WHITE + combat + "\n" +
+                            ChatFormatting.DARK_GREEN + "Foraging" + colon + ChatFormatting.WHITE + foraging + c + ChatFormatting.DARK_AQUA + " Fishing" + colon + ChatFormatting.WHITE + fishing + "\n" +
+                            ChatFormatting.AQUA + "Enchanting" + colon + ChatFormatting.WHITE + enchanting + c + ChatFormatting.BLUE + " Alchemy" + colon + ChatFormatting.WHITE + alchemy + "\n" +
+                            ChatFormatting.YELLOW + "Carpentry" + colon + ChatFormatting.WHITE + carpentry + c + ChatFormatting.LIGHT_PURPLE + " Runecrafting" + colon + ChatFormatting.WHITE + runecrafting;
 
                     main.getUtil().sendDataMessage(message);
-                    IChatComponent profileText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Get Profile" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
-                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "sky.lea.moe Link" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent profileText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Profile" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "SkyLea" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
                     ChatStyle profileStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getprofile " + username + " " + profileName));
                     ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
                     profileText.setChatStyle(profileStyle);
                     skyLeaText.setChatStyle(skyLeaStyle);
 
-                    skyLeaText.appendSibling(profileText);
+                    skyLeaText.appendText(" ").appendSibling(profileText);
                     Minecraft.getMinecraft().thePlayer.addChatMessage(skyLeaText);
                     return;
                 } catch (IOException e) {

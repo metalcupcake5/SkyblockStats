@@ -12,7 +12,7 @@ public class StatsUtil {
     }
 
     public static String getLevel(JsonObject profileObj, String skillName){
-        JsonObject profileData = profileObj.get("data").getAsJsonObject();
+        JsonObject profileData = profileObj.getAsJsonObject("data");
         JsonObject skills = profileData.get("levels").getAsJsonObject();
         if(!skills.has(skillName)){
             return null;
@@ -26,7 +26,7 @@ public class StatsUtil {
     }
 
     public static Integer getStat(JsonObject profileObj, String stat){
-        JsonObject profileData = profileObj.get("data").getAsJsonObject();
+        JsonObject profileData = profileObj.getAsJsonObject("data");
         JsonObject stats = profileData.get("stats").getAsJsonObject();
         if(!stats.has(stat)){
             return null;
@@ -34,8 +34,16 @@ public class StatsUtil {
         return stats.get(stat).getAsInt();
     }
 
-    public static String shadeIfMax(Integer level){
-        if(level == 50){
+    public static String getSlayerLevel(JsonObject profileObj, String slayer){
+        JsonObject profileData = profileObj.getAsJsonObject("data");
+        JsonObject slayers = profileData.getAsJsonObject("slayers");
+        if(!slayers.has(slayer)){
+            return null;
+        }
+        JsonObject slayerData = slayers.getAsJsonObject(slayer);
+        JsonObject levels = slayerData.getAsJsonObject("level");
+        Integer level = levels.get("currentLevel").getAsInt();
+        if(levels.get("maxLevel").getAsInt() == level){
             return ChatFormatting.GOLD + level.toString();
         }
         return ChatFormatting.WHITE + level.toString();

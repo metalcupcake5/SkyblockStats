@@ -159,14 +159,18 @@ public class GetProfile extends CommandBase {
                     //String farming = main.getStatsUtil().getLevel(profile, "farming");
                     String armor = main.getItemUtil().getArmorSet(profile);
                     String armorRarity = main.getItemUtil().getArmorSetRarity(profile);
+                    String sword = main.getItemUtil().getHighestSword(profile);
                     String fairy_souls = main.getUtil().getFairySouls(profile);
                     Integer health = main.getStatsUtil().getStat(profile, "health");
                     Integer defense = main.getStatsUtil().getStat(profile, "defense");
                     Integer intel = main.getStatsUtil().getStat(profile, "intelligence");
                     Integer cc = main.getStatsUtil().getStat(profile, "crit_chance");
                     Integer cd = main.getStatsUtil().getStat(profile, "crit_damage");
-                    String sword = main.getItemUtil().getHighestSword(profile);
+                    String zombie = main.getStatsUtil().getSlayerLevel(profile, "zombie");
+                    String spider = main.getStatsUtil().getSlayerLevel(profile, "spider");
+                    String wolf = main.getStatsUtil().getSlayerLevel(profile, "wolf");
 
+                    //Format Stats
                     String stats = ChatFormatting.RED + Symbols.HEALTH.getSymbol() + ": " + health + " " + ChatFormatting.GREEN + Symbols.DEFENSE.getSymbol() + ": " + defense + " " +
                             ChatFormatting.AQUA + Symbols.INTELLIGENCE.getSymbol() + ": " + intel + "\n" +
                             ChatFormatting.BLUE + Symbols.CRIT_CHANCE.getSymbol() + ": " + cc + " " +ChatFormatting.BLUE + Symbols.CRIT_DAMAGE.getSymbol() + ": " + cd + "\n";
@@ -179,20 +183,21 @@ public class GetProfile extends CommandBase {
                             stats +
                             ChatFormatting.LIGHT_PURPLE + "Fairy Souls" + ChatFormatting.WHITE + ": " + ChatFormatting.DARK_PURPLE + fairy_souls + "\n" +
                             ChatFormatting.GRAY + "Armor Set" + ChatFormatting.WHITE + ": " + armor_message + "\n" +
-                            ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword;
+                            ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword + "\n" +
+                            ChatFormatting.GRAY + "Zombie " + zombie + ChatFormatting.GRAY + ", Spider " + spider + ChatFormatting.GRAY + ", Wolf " + wolf;
                             //ChatFormatting.GRAY + "Farming: "+ farming ;
 
                     main.getUtil().sendDataMessage(message);
 
                     //Send skills text
-                    IChatComponent skillsText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Get Skills" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
-                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "sky.lea.moe Link" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent skillsText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Skills" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "SkyLea" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
                     ChatStyle skillStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getskills " + username + " " + profileName));
                     ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
                     skillsText.setChatStyle(skillStyle);
                     skyLeaText.setChatStyle(skyLeaStyle);
 
-                    skyLeaText.appendSibling(skillsText);
+                    skyLeaText.appendText(" ").appendSibling(skillsText);
                     Minecraft.getMinecraft().thePlayer.addChatMessage(skyLeaText);
                     return;
                 } catch (IOException e) {
