@@ -6,8 +6,13 @@ import com.google.gson.JsonObject;
 import io.github.metalcupcake5.SkyblockStats.SkyblockStats;
 import io.github.metalcupcake5.SkyblockStats.utils.ChatFormatting;
 import io.github.metalcupcake5.SkyblockStats.utils.Symbols;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.common.FMLLog;
 
 import java.io.BufferedReader;
@@ -32,7 +37,7 @@ public class GetProfile extends CommandBase {
 
     @Override
     public List<String> getCommandAliases(){
-        return Arrays.asList("profile", "getprofile");
+        return Arrays.asList("getpf", "getprofile");
     }
 
     @Override
@@ -42,7 +47,7 @@ public class GetProfile extends CommandBase {
                 ChatFormatting.GRAY + "/getProfile" +
                 ChatFormatting.LIGHT_PURPLE + "|--------\n" +
                 ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getProfile <username> <profile>\n" +
-                ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/profile, /getprofile\n" +
+                ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/getprofile, /getpf\n" +
                 ChatFormatting.LIGHT_PURPLE + "--------|" +
                 ChatFormatting.GRAY + "/getProfile" +
                 ChatFormatting.LIGHT_PURPLE + "|--------";
@@ -174,10 +179,21 @@ public class GetProfile extends CommandBase {
                             stats +
                             ChatFormatting.LIGHT_PURPLE + "Fairy Souls" + ChatFormatting.WHITE + ": " + ChatFormatting.DARK_PURPLE + fairy_souls + "\n" +
                             ChatFormatting.GRAY + "Armor Set" + ChatFormatting.WHITE + ": " + armor_message + "\n" +
-                            ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword + "\n";// +
+                            ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword;
                             //ChatFormatting.GRAY + "Farming: "+ farming ;
 
                     main.getUtil().sendDataMessage(message);
+
+                    //Send skills text
+                    IChatComponent skillsText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Get Skills" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "sky.lea.moe Link" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    ChatStyle skillStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getskills " + username + " " + profileName));
+                    ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
+                    skillsText.setChatStyle(skillStyle);
+                    skyLeaText.setChatStyle(skyLeaStyle);
+
+                    skyLeaText.appendSibling(skillsText);
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(skyLeaText);
                     return;
                 } catch (IOException e) {
                     main.getUtil().sendError("An error occurred! Check the logs for the error!");

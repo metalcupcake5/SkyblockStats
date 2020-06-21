@@ -5,7 +5,10 @@ import com.google.gson.JsonObject;
 import io.github.metalcupcake5.SkyblockStats.SkyblockStats;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
 
 @Getter
 public class Util {
@@ -33,6 +36,13 @@ public class Util {
                 text + "\n" +
                 ChatFormatting.STRIKETHROUGH + "------------------------------";
         sendMessage(content, false);
+    }
+
+    public void sendClickableMessage(String text, String command){
+        IChatComponent clickableText = new ChatComponentText(text);
+        ChatStyle style = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command));
+        clickableText.setChatStyle(style);
+        Minecraft.getMinecraft().thePlayer.addChatMessage(clickableText);
     }
 
     public void sendError(String text){

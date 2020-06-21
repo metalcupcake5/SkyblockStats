@@ -5,8 +5,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.metalcupcake5.SkyblockStats.SkyblockStats;
 import io.github.metalcupcake5.SkyblockStats.utils.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.common.FMLLog;
 
 import java.io.BufferedReader;
@@ -171,6 +176,15 @@ public class GetSkills extends CommandBase {
                             ChatFormatting.YELLOW + "Carpentry: " + ChatFormatting.WHITE + carpentry + ChatFormatting.LIGHT_PURPLE + " Runecrafting: " + ChatFormatting.WHITE + runecrafting;
 
                     main.getUtil().sendDataMessage(message);
+                    IChatComponent profileText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Get Profile" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "sky.lea.moe Link" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    ChatStyle profileStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getprofile " + username + " " + profileName));
+                    ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
+                    profileText.setChatStyle(profileStyle);
+                    skyLeaText.setChatStyle(skyLeaStyle);
+
+                    skyLeaText.appendSibling(profileText);
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(skyLeaText);
                     return;
                 } catch (IOException e) {
                     main.getUtil().sendError("An error occurred! Check the logs for the error!");
