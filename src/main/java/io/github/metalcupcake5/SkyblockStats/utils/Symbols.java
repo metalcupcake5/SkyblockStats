@@ -10,7 +10,10 @@ public enum Symbols {
     STRENGTH("❁"),
     INTELLIGENCE("✎"),
     CRIT_CHANCE("☣"),
-    CRIT_DAMAGE("☠");
+    CRIT_DAMAGE("☠"),
+    SEA_CREATURE_CHANCE("α"),
+    MAGIC_FIND("✯"),
+    PET_LUCK("♣");
 
     private final String symbol;
 
@@ -21,6 +24,5 @@ public enum Symbols {
     public String getSymbol() {
         return this.symbol;
     }
-
 
 }

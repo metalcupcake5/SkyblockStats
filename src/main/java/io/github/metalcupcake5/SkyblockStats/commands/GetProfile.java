@@ -14,6 +14,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.common.FMLLog;
+import scala.Int;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -161,24 +162,33 @@ public class GetProfile extends CommandBase {
                     String display_name = profile.get("data").getAsJsonObject().get("display_name").getAsString();
 
                     //Profile Data
-                    //String farming = main.getStatsUtil().getLevel(profile, "farming");
+
+                    //Items and stuff
                     String armor = main.getItemUtil().getArmorSet(profile);
                     String armorRarity = main.getItemUtil().getArmorSetRarity(profile);
                     String sword = main.getItemUtil().getHighestSword(profile);
                     String fairy_souls = main.getUtil().getFairySouls(profile);
+
+                    //Stats
                     Integer health = main.getStatsUtil().getStat(profile, "health");
                     Integer defense = main.getStatsUtil().getStat(profile, "defense");
                     Integer intel = main.getStatsUtil().getStat(profile, "intelligence");
+                    Integer strength = main.getStatsUtil().getStat(profile, "strength");
                     Integer cc = main.getStatsUtil().getStat(profile, "crit_chance");
                     Integer cd = main.getStatsUtil().getStat(profile, "crit_damage");
+                    Integer scc = main.getStatsUtil().getStat(profile, "sea_creature_chance");
+                    Integer mf = main.getStatsUtil().getStat(profile, "magic_find");
+                    Integer luck = main.getStatsUtil().getStat(profile, "pet_luck");
+
+                    //Slayer
                     String zombie = main.getStatsUtil().getSlayerLevel(profile, "zombie");
                     String spider = main.getStatsUtil().getSlayerLevel(profile, "spider");
                     String wolf = main.getStatsUtil().getSlayerLevel(profile, "wolf");
 
                     //Format Stats
-                    String stats = ChatFormatting.RED + Symbols.HEALTH.getSymbol() + ": " + health + " " + ChatFormatting.GREEN + Symbols.DEFENSE.getSymbol() + ": " + defense + " " +
-                            ChatFormatting.AQUA + Symbols.INTELLIGENCE.getSymbol() + ": " + intel + "\n" +
-                            ChatFormatting.BLUE + Symbols.CRIT_CHANCE.getSymbol() + ": " + cc + " " +ChatFormatting.BLUE + Symbols.CRIT_DAMAGE.getSymbol() + ": " + cd + "\n";
+                    String stats = ChatFormatting.RED + Symbols.HEALTH.getSymbol() + ": " + health + " " + ChatFormatting.GREEN + Symbols.DEFENSE.getSymbol() + ": " + defense + " " + ChatFormatting.AQUA + Symbols.INTELLIGENCE.getSymbol() + ": " + intel + "\n" +
+                            ChatFormatting.RED + Symbols.STRENGTH.getSymbol() + ": " + strength + " " + ChatFormatting.BLUE + Symbols.CRIT_CHANCE.getSymbol() + ": " + cc + " " + ChatFormatting.BLUE + Symbols.CRIT_DAMAGE.getSymbol() + ": " + cd + "\n" +
+                            ChatFormatting.DARK_AQUA + Symbols.SEA_CREATURE_CHANCE.getSymbol() + ": " + scc + " " + ChatFormatting.AQUA + Symbols.MAGIC_FIND.getSymbol() + ": " + mf + " " + ChatFormatting.LIGHT_PURPLE + Symbols.PET_LUCK.getSymbol() + ": " + luck + "\n";
 
                     //String formatting
                     String armor_message = armor == null ? ChatFormatting.GRAY + "No full set worn." : main.getUtil().parseRarity(armor, armorRarity);
