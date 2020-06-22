@@ -59,8 +59,7 @@ public class GetSkills extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args){
-        if(args.length > 1) {
-            final String profileName = args[1];
+        if(args.length > 0) {
             final String username = args[0];
             new Thread(() -> {
                 FMLLog.info("Grabbing uuid...");
@@ -114,6 +113,13 @@ public class GetSkills extends CommandBase {
                         String name = me.getValue().getAsJsonObject().get("cute_name").getAsString();
                         profileIds.add(id);
                         profileNames.add(name);
+                    }
+
+                    String profileName;
+                    if(args.length == 1){
+                        profileName = main.getUtil().getRecentProfile(profiles);
+                    }else{
+                        profileName = args[1];
                     }
 
                     if(!profileNames.contains(main.getUtil().toProperCase(profileName))){
