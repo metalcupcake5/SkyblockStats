@@ -48,4 +48,14 @@ public class StatsUtil {
         }
         return ChatFormatting.WHITE + level.toString();
     }
+
+    public static String getAverageLevel(JsonObject profileObj){
+        JsonObject profileData = profileObj.getAsJsonObject("data");
+        Double level = profileData.get("average_level").getAsDouble();
+        Double average = Math.round(level * 100.0) / 100.0;
+        if(average == 50){
+            return ChatFormatting.GOLD + average.toString();
+        }
+        return ChatFormatting.WHITE + average.toString();
+    }
 }

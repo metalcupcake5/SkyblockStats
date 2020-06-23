@@ -170,6 +170,7 @@ public class GetProfile extends CommandBase {
                     String fairy_souls = main.getUtil().getFairySouls(profile);
 
                     //Stats
+                    String average = main.getStatsUtil().getAverageLevel(profile);
                     Integer health = main.getStatsUtil().getStat(profile, "health");
                     Integer defense = main.getStatsUtil().getStat(profile, "defense");
                     Integer intel = main.getStatsUtil().getStat(profile, "intelligence");
@@ -196,6 +197,7 @@ public class GetProfile extends CommandBase {
                     String message = ChatFormatting.GRAY+"Stats for " + ChatFormatting.LIGHT_PURPLE+ display_name +
                             ChatFormatting.GRAY + " on profile " + ChatFormatting.LIGHT_PURPLE + main.getUtil().toProperCase(profileName) + ChatFormatting.GRAY + ".\n" +
                             stats +
+                            ChatFormatting.GRAY + "Average Skill Level: " + average + "\n" +
                             ChatFormatting.LIGHT_PURPLE + "Fairy Souls" + ChatFormatting.WHITE + ": " + ChatFormatting.DARK_PURPLE + fairy_souls + "\n" +
                             ChatFormatting.GRAY + "Armor Set" + ChatFormatting.WHITE + ": " + armor_message + "\n" +
                             ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword + "\n" +
