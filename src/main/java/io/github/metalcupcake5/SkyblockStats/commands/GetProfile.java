@@ -48,6 +48,7 @@ public class GetProfile extends CommandBase {
                 ChatFormatting.LIGHT_PURPLE + "|--------\n" +
                 ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getProfile <username> <profile>\n" +
                 ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/getprofile, /getpf\n" +
+                ChatFormatting.GRAY + "- Description: " + ChatFormatting.GREEN + "Gives an overview of a players profile.\n" +
                 ChatFormatting.LIGHT_PURPLE + "--------|" +
                 ChatFormatting.GRAY + "/getProfile" +
                 ChatFormatting.LIGHT_PURPLE + "|--------";

@@ -43,12 +43,13 @@ public class GetSlayers extends CommandBase {
     public String getCommandUsage(ICommandSender sender){
         return
                 ChatFormatting.LIGHT_PURPLE + "--------|" +
-                ChatFormatting.GRAY + "/getProfile" +
+                ChatFormatting.GRAY + "/getSlayers" +
                 ChatFormatting.LIGHT_PURPLE + "|--------\n" +
                 ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getSlayers <username> [profile]\n" +
                 ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/getslayers, /getslayer\n" +
+                ChatFormatting.GRAY + "- Description: " + ChatFormatting.GREEN + "View comprehensive data of a player's slayers.\n" +
                 ChatFormatting.LIGHT_PURPLE + "--------|" +
-                ChatFormatting.GRAY + "/getProfile" +
+                ChatFormatting.GRAY + "/getSlayers" +
                 ChatFormatting.LIGHT_PURPLE + "|--------";
     }
 

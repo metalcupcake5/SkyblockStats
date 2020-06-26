@@ -46,6 +46,7 @@ public class GetSkills extends CommandBase {
                         ChatFormatting.LIGHT_PURPLE + "|--------\n" +
                         ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getSkills <username> <profile>\n" +
                         ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/getskills\n" +
+                        ChatFormatting.GRAY + "- Description: " + ChatFormatting.GREEN + "View all of a player's skills.\n" +
                         ChatFormatting.LIGHT_PURPLE + "--------|" +
                         ChatFormatting.GRAY + "/getSkills" +
                         ChatFormatting.LIGHT_PURPLE + "|--------";
