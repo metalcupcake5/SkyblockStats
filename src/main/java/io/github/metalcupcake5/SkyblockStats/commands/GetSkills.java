@@ -160,6 +160,7 @@ public class GetSkills extends CommandBase {
                     String display_name = profile.get("data").getAsJsonObject().get("display_name").getAsString();
 
                     //Skills Data
+                    String average = main.getStatsUtil().getAverageLevel(profile);
                     String farming = main.getStatsUtil().getLevel(profile, "farming");
                     String combat = main.getStatsUtil().getLevel(profile, "combat");
                     String foraging = main.getStatsUtil().getLevel(profile, "foraging");
@@ -180,17 +181,21 @@ public class GetSkills extends CommandBase {
                             ChatFormatting.GRAY + "Mining" + colon + ChatFormatting.WHITE + mining + ChatFormatting.DARK_RED + " Combat" + colon + ChatFormatting.WHITE + combat + "\n" +
                             ChatFormatting.DARK_GREEN + "Foraging" + colon + ChatFormatting.WHITE + foraging + c + ChatFormatting.DARK_AQUA + " Fishing" + colon + ChatFormatting.WHITE + fishing + "\n" +
                             ChatFormatting.AQUA + "Enchanting" + colon + ChatFormatting.WHITE + enchanting + c + ChatFormatting.BLUE + " Alchemy" + colon + ChatFormatting.WHITE + alchemy + "\n" +
-                            ChatFormatting.YELLOW + "Carpentry" + colon + ChatFormatting.WHITE + carpentry + c + ChatFormatting.LIGHT_PURPLE + " Runecrafting" + colon + ChatFormatting.WHITE + runecrafting;
+                            ChatFormatting.YELLOW + "Carpentry" + colon + ChatFormatting.WHITE + carpentry + c + ChatFormatting.LIGHT_PURPLE + " Runecrafting" + colon + ChatFormatting.WHITE + runecrafting + "\n" +
+                            ChatFormatting.GRAY + "Average Skill Level" + colon + average;
 
                     main.getUtil().sendDataMessage(message);
-                    IChatComponent profileText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Profile" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
                     IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "SkyLea" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
-                    ChatStyle profileStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getprofile " + username + " " + profileName));
+                    IChatComponent profileText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Profile" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent slayerText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Slayers" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
                     ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
-                    profileText.setChatStyle(profileStyle);
+                    ChatStyle profileStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getprofile " + username + " " + profileName));
+                    ChatStyle slayerStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getslayers " + username + " " + profileName));
                     skyLeaText.setChatStyle(skyLeaStyle);
+                    profileText.setChatStyle(profileStyle);
+                    slayerText.setChatStyle(slayerStyle);
 
-                    skyLeaText.appendText(" ").appendSibling(profileText);
+                    skyLeaText.appendText(" ").appendSibling(profileText).appendText(" ").appendSibling(slayerText);
                     Minecraft.getMinecraft().thePlayer.addChatMessage(skyLeaText);
                     return;
                 } catch (IOException e) {

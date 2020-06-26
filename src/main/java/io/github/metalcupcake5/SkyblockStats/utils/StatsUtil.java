@@ -58,4 +58,29 @@ public class StatsUtil {
         }
         return ChatFormatting.WHITE + average.toString();
     }
+
+    public static Integer getSlayerLevelData(JsonObject profileObj, String slayer, String data){
+        JsonObject profileData = profileObj.getAsJsonObject("data");
+        JsonObject slayers = profileData.getAsJsonObject("slayers");
+        if(!slayers.has(slayer)){
+            return null;
+        }
+        JsonObject slayerData = slayers.getAsJsonObject(slayer);
+        JsonObject levels = slayerData.getAsJsonObject("level");
+        Integer response = levels.get(data).getAsInt();
+        return response;
+    }
+
+    public String getSlayerProgress(JsonObject profileObj, String slayer){
+        JsonObject profileData = profileObj.getAsJsonObject("data");
+        JsonObject slayers = profileData.getAsJsonObject("slayers");
+        if(!slayers.has(slayer)){
+            return null;
+        }
+        JsonObject slayerData = slayers.getAsJsonObject(slayer);
+        JsonObject levels = slayerData.getAsJsonObject("level");
+        Double progress = levels.get("progress").getAsDouble();
+        long average = Math.round(progress * 100.0);
+        return ChatFormatting.WHITE + "" + average + "%";
+    }
 }

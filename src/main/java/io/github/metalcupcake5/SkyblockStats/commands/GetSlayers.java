@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.github.metalcupcake5.SkyblockStats.SkyblockStats;
 import io.github.metalcupcake5.SkyblockStats.utils.ChatFormatting;
-import io.github.metalcupcake5.SkyblockStats.utils.Symbols;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -22,22 +21,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
-public class GetProfile extends CommandBase {
-    
+public class GetSlayers extends CommandBase {
+
     private SkyblockStats main;
 
-    public GetProfile(SkyblockStats main){
+    public GetSlayers(SkyblockStats main){
         this.main = main;
     }
 
     @Override
     public String getCommandName(){
-        return "getProfile";
+        return "getSlayers";
     }
 
     @Override
     public List<String> getCommandAliases(){
-        return Arrays.asList("getpf", "getprofile");
+        return Arrays.asList("getslayers", "getslayer");
     }
 
     @Override
@@ -46,8 +45,8 @@ public class GetProfile extends CommandBase {
                 ChatFormatting.LIGHT_PURPLE + "--------|" +
                 ChatFormatting.GRAY + "/getProfile" +
                 ChatFormatting.LIGHT_PURPLE + "|--------\n" +
-                ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getProfile <username> <profile>\n" +
-                ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/getprofile, /getpf\n" +
+                ChatFormatting.GRAY + "- Usage: " + ChatFormatting.GREEN + "/getSlayers <username> [profile]\n" +
+                ChatFormatting.GRAY + "- Aliases: " + ChatFormatting.GREEN + "/getslayers, /getslayer\n" +
                 ChatFormatting.LIGHT_PURPLE + "--------|" +
                 ChatFormatting.GRAY + "/getProfile" +
                 ChatFormatting.LIGHT_PURPLE + "|--------";
@@ -160,63 +159,64 @@ public class GetProfile extends CommandBase {
 
                     String display_name = profile.get("data").getAsJsonObject().get("display_name").getAsString();
 
-                    //Profile Data
+                    //Slayer Data
+                    String zombieLevel = main.getStatsUtil().getSlayerLevel(profile, "zombie");
+                    String spiderLevel = main.getStatsUtil().getSlayerLevel(profile, "spider");
+                    String wolfLevel = main.getStatsUtil().getSlayerLevel(profile, "wolf");
 
-                    //Items and stuff
-                    String armor = main.getItemUtil().getArmorSet(profile);
-                    String armorRarity = main.getItemUtil().getArmorSetRarity(profile);
-                    String sword = main.getItemUtil().getHighestSword(profile);
-                    String fairy_souls = main.getUtil().getFairySouls(profile);
+                    Integer zombieNext = main.getStatsUtil().getSlayerLevelData(profile, "zombie", "xpForNext") - main.getStatsUtil().getSlayerLevelData(profile, "zombie", "xp");
+                    Integer spiderNext = main.getStatsUtil().getSlayerLevelData(profile, "spider", "xpForNext") - main.getStatsUtil().getSlayerLevelData(profile, "spider", "xp");
+                    Integer wolfNext = main.getStatsUtil().getSlayerLevelData(profile, "wolf", "xpForNext") - main.getStatsUtil().getSlayerLevelData(profile, "wolf", "xp");
 
-                    //Stats
-                    String average = main.getStatsUtil().getAverageLevel(profile);
-                    Integer health = main.getStatsUtil().getStat(profile, "health");
-                    Integer defense = main.getStatsUtil().getStat(profile, "defense");
-                    Integer intel = main.getStatsUtil().getStat(profile, "intelligence");
-                    Integer strength = main.getStatsUtil().getStat(profile, "strength");
-                    Integer cc = main.getStatsUtil().getStat(profile, "crit_chance");
-                    Integer cd = main.getStatsUtil().getStat(profile, "crit_damage");
-                    Integer scc = main.getStatsUtil().getStat(profile, "sea_creature_chance");
-                    Integer mf = main.getStatsUtil().getStat(profile, "magic_find");
-                    Integer luck = main.getStatsUtil().getStat(profile, "pet_luck");
+                    String zombieProgress = main.getStatsUtil().getSlayerProgress(profile, "zombie");
+                    String spiderProgress = main.getStatsUtil().getSlayerProgress(profile, "spider");
+                    String wolfProgress = main.getStatsUtil().getSlayerProgress(profile, "wolf");
 
-                    //Slayer
-                    String zombie = main.getStatsUtil().getSlayerLevel(profile, "zombie");
-                    String spider = main.getStatsUtil().getSlayerLevel(profile, "spider");
-                    String wolf = main.getStatsUtil().getSlayerLevel(profile, "wolf");
+                    Integer zombieXp = main.getStatsUtil().getSlayerLevelData(profile, "zombie", "xp");
+                    Integer spiderXp = main.getStatsUtil().getSlayerLevelData(profile, "spider", "xp");
+                    Integer wolfXp = main.getStatsUtil().getSlayerLevelData(profile, "wolf", "xp");
 
-                    //Format Stats
-                    String stats = ChatFormatting.RED + Symbols.HEALTH.getSymbol() + ": " + health + " " + ChatFormatting.GREEN + Symbols.DEFENSE.getSymbol() + ": " + defense + " " + ChatFormatting.AQUA + Symbols.INTELLIGENCE.getSymbol() + ": " + intel + "\n" +
-                            ChatFormatting.RED + Symbols.STRENGTH.getSymbol() + ": " + strength + " " + ChatFormatting.BLUE + Symbols.CRIT_CHANCE.getSymbol() + ": " + cc + " " + ChatFormatting.BLUE + Symbols.CRIT_DAMAGE.getSymbol() + ": " + cd + "\n" +
-                            ChatFormatting.DARK_AQUA + Symbols.SEA_CREATURE_CHANCE.getSymbol() + ": " + scc + " " + ChatFormatting.AQUA + Symbols.MAGIC_FIND.getSymbol() + ": " + mf + " " + ChatFormatting.LIGHT_PURPLE + Symbols.PET_LUCK.getSymbol() + ": " + luck + "\n";
+                    String zombie =
+                            ChatFormatting.DARK_GREEN + "Zombie Slayer " + ChatFormatting.WHITE + zombieLevel + ChatFormatting.GRAY + ":" + "\n" + ChatFormatting.RESET +
+                            ChatFormatting.GRAY + "  - XP to next level:" + ChatFormatting.WHITE + " " + zombieNext + "/" + main.getStatsUtil().getSlayerLevelData(profile, "zombie", "xpForNext") +"\n" +
+                            ChatFormatting.GRAY + "  - Progress: " + zombieProgress + "\n" +
+                            ChatFormatting.GRAY + "  - Total XP: " + ChatFormatting.WHITE + zombieXp;
 
-                    //String formatting
-                    String armor_message = armor == null ? ChatFormatting.GRAY + "No full set worn." : main.getUtil().parseRarity(armor, armorRarity);
+                    String spider =
+                            ChatFormatting.DARK_PURPLE + "Spider Slayer " + ChatFormatting.WHITE + spiderLevel + ChatFormatting.GRAY + ":" + "\n" + ChatFormatting.RESET +
+                            ChatFormatting.GRAY + "  - XP to next level:" + ChatFormatting.WHITE + " " + spiderNext + "/" + main.getStatsUtil().getSlayerLevelData(profile, "spider", "xpForNext") + "\n" +
+                            ChatFormatting.GRAY + "  - Progress: " + spiderProgress + "\n" +
+                            ChatFormatting.GRAY + "  - Total XP: " + ChatFormatting.WHITE + spiderXp;
 
-                    String message = ChatFormatting.GRAY+"Stats for " + ChatFormatting.LIGHT_PURPLE+ display_name +
+                    String wolf =
+                            ChatFormatting.DARK_RED + "Wolf Slayer " + ChatFormatting.WHITE + wolfLevel + ChatFormatting.GRAY + ":" + "\n" + ChatFormatting.RESET +
+                            ChatFormatting.GRAY + "  - XP to next level:" + ChatFormatting.WHITE + " " + wolfNext + "/" + main.getStatsUtil().getSlayerLevelData(profile, "wolf", "xpForNext") + "\n" +
+                            ChatFormatting.GRAY + "  - Progress: " + wolfProgress + "\n" +
+                            ChatFormatting.GRAY + "  - Total XP: " + ChatFormatting.WHITE + wolfXp;
+
+
+                    String message = ChatFormatting.GRAY+"Slayers for " + ChatFormatting.LIGHT_PURPLE+ display_name +
                             ChatFormatting.GRAY + " on profile " + ChatFormatting.LIGHT_PURPLE + main.getUtil().toProperCase(profileName) + ChatFormatting.GRAY + ".\n" +
-                            stats +
-                            ChatFormatting.GRAY + "Average Skill Level" + ChatFormatting.WHITE + ": " + average + "\n" +
-                            ChatFormatting.LIGHT_PURPLE + "Fairy Souls" + ChatFormatting.WHITE + ": " + ChatFormatting.DARK_PURPLE + fairy_souls + "\n" +
-                            ChatFormatting.GRAY + "Armor Set" + ChatFormatting.WHITE + ": " + armor_message + "\n" +
-                            ChatFormatting.GRAY + "Sword" + ChatFormatting.WHITE + ": " + sword + "\n" +
-                            ChatFormatting.GRAY + "Zombie " + zombie + ChatFormatting.GRAY + ", Spider " + spider + ChatFormatting.GRAY + ", Wolf " + wolf;
-                            //ChatFormatting.GRAY + "Farming: "+ farming ;
+                            zombie + "\n" +
+                            spider + "\n" +
+                            wolf;
 
                     main.getUtil().sendDataMessage(message);
 
                     //Send skills text
                     IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "SkyLea" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent profileText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Profile" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
                     IChatComponent skillsText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Skills" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
-                    IChatComponent slayerText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Slayers" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
-                    ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
-                    ChatStyle skillStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getskills " + username + " " + profileName));
-                    ChatStyle slayerStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getslayers " + username + " " + profileName));
-                    skyLeaText.setChatStyle(skyLeaStyle);
-                    skillsText.setChatStyle(skillStyle);
-                    slayerText.setChatStyle(slayerStyle);
 
-                    skyLeaText.appendText(" ").appendSibling(skillsText).appendText(" ").appendSibling(slayerText);
+                    ChatStyle profileStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getprofile " + username + " " + profileName));
+                    ChatStyle skillStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getskills " + username + " " + profileName));
+                    ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
+
+                    skyLeaText.setChatStyle(skyLeaStyle);
+                    profileText.setChatStyle(profileStyle);
+                    skillsText.setChatStyle(skillStyle);
+
+                    skyLeaText.appendText(" ").appendSibling(profileText).appendText(" ").appendSibling(skillsText);
                     Minecraft.getMinecraft().thePlayer.addChatMessage(skyLeaText);
                     return;
                 } catch (IOException e) {

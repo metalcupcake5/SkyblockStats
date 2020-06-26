@@ -25,16 +25,16 @@ public class Util {
 
     private static final String MESSAGE_PREFIX = ChatFormatting.GRAY + "[" + ChatFormatting.LIGHT_PURPLE + SkyblockStats.MOD_NAME + ChatFormatting.GRAY + "] ";
 
-    public void sendMessage(String text, boolean prefix){
+    public static void sendMessage(String text, boolean prefix){
         ChatComponentText message = new ChatComponentText((prefix ? MESSAGE_PREFIX : "")+text);
         Minecraft.getMinecraft().thePlayer.addChatMessage(message);
     }
 
-    public void sendMessage(String text){
+    public static void sendMessage(String text){
         sendMessage(text, true);
     }
 
-    public void sendDataMessage(String text){
+    public static void sendDataMessage(String text){
         String content =
                 ChatFormatting.STRIKETHROUGH + "------------------------------" + "\n" +
                 text + "\n" +
@@ -42,14 +42,14 @@ public class Util {
         sendMessage(content, false);
     }
 
-    public void sendClickableMessage(String text, String command){
+    public static void sendClickableMessage(String text, String command){
         IChatComponent clickableText = new ChatComponentText(text);
         ChatStyle style = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command));
         clickableText.setChatStyle(style);
         Minecraft.getMinecraft().thePlayer.addChatMessage(clickableText);
     }
 
-    public void sendError(String text){
+    public static void sendError(String text){
         sendMessage(ChatFormatting.RED + text);
     }
 
