@@ -17,7 +17,7 @@ public class SkyblockStats {
 
     public static final String MODID = "skyblockstats";
     public static final String MOD_NAME = "SkyblockStats";
-    public static final String VERSION = "0.0.1-SNAPSHOT";
+    public static final String VERSION = "v1.1.0";
 
     @Getter private static SkyblockStats instance;
     private Util util = new Util(this);
