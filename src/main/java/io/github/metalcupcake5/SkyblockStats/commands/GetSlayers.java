@@ -69,7 +69,7 @@ public class GetSlayers extends CommandBase {
                         ChatFormatting.GRAY + "This may take some time depending on your connection.");
                 try {
 
-                    URL url = new URL("https://sky.lea.moe/api/v2/profile/"+username);
+                    URL url = new URL("https://sky.shiiyu.moe/api/v2/profile/"+username);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.setRequestProperty("User-Agent", "metalcupcake5/1.0");
@@ -132,7 +132,7 @@ public class GetSlayers extends CommandBase {
                     int index = profileNames.indexOf(main.getUtil().toProperCase(profileName));
                     String id = profileIds.get(index);
 
-                    URL apiURL = new URL("https://sky.lea.moe/api/v2/profile/"+username);
+                    URL apiURL = new URL("https://sky.shiiyu.moe/api/v2/profile/"+username);
                     HttpURLConnection apiConnection = (HttpURLConnection) apiURL.openConnection();
                     apiConnection.setRequestMethod("GET");
                     apiConnection.setRequestProperty("User-Agent", "metalcupcake5/1.0");
@@ -205,13 +205,13 @@ public class GetSlayers extends CommandBase {
                     main.getUtil().sendDataMessage(message);
 
                     //Send skills text
-                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "SkyLea" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
+                    IChatComponent skyLeaText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "SkyShiiyu" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
                     IChatComponent profileText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Profile" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
                     IChatComponent skillsText = new ChatComponentText("" + ChatFormatting.GRAY + ChatFormatting.BOLD + "[" + ChatFormatting.LIGHT_PURPLE + ChatFormatting.BOLD + "Skills" + ChatFormatting.GRAY + ChatFormatting.BOLD + "]");
 
                     ChatStyle profileStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getprofile " + username + " " + profileName));
                     ChatStyle skillStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/getskills " + username + " " + profileName));
-                    ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.lea.moe/stats/" + username + "/" + profileName));
+                    ChatStyle skyLeaStyle = new ChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://sky.shiiyu.moe/stats/" + username + "/" + profileName));
 
                     skyLeaText.setChatStyle(skyLeaStyle);
                     profileText.setChatStyle(profileStyle);

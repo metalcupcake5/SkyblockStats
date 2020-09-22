@@ -2,8 +2,7 @@
     {
       "modid": "skyblockstats",
       "name": "SkyblockStats",
-      "description": "A mod to fetch Hypixel Skyblock player stats from sky.lea.moe\nCommands:\n - /getprofile <username> [profile]\n - /getskills <username> [profile]\n - /getslayers <username> [profile]",
-
+      "description": "A mod to fetch Hypixel Skyblock player stats from https://sky.shiiyu.moe\nCommands:\n - /getprofile <username> [profile]\n - /getskills <username> [profile]\n - /getslayers <username> [profile]",
       "version": "${version}",
       "mcversion": "${mcversion}",
       "url": "",

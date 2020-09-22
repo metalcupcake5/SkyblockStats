@@ -1,19 +1,15 @@
 package io.github.metalcupcake5.SkyblockStats.utils;
 
-import com.google.common.base.Preconditions;
-
-import java.awt.*;
-
 public enum Symbols {
-    HEALTH("❤"),
-    DEFENSE("❈"),
-    STRENGTH("❁"),
-    INTELLIGENCE("✎"),
-    CRIT_CHANCE("☣"),
-    CRIT_DAMAGE("☠"),
-    SEA_CREATURE_CHANCE("α"),
-    MAGIC_FIND("✯"),
-    PET_LUCK("♣");
+    HEALTH("\u2764"),
+    DEFENSE("\u2748"),
+    STRENGTH("\u2741"),
+    INTELLIGENCE("\u270E"),
+    CRIT_CHANCE("\u2623"),
+    CRIT_DAMAGE("\u2620"),
+    SEA_CREATURE_CHANCE("\u03B1"),
+    MAGIC_FIND("\u272F"),
+    PET_LUCK("\u2663");
 
     private final String symbol;
 
